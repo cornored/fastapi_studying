@@ -1,15 +1,21 @@
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from typing import Union
+from enum import Enum
 import socket
 import datetime
 
 app = FastAPI()
 
+class OSType(str, Enum):
+    windows = "Windows"
+    linux = "Linux"
+    macos = "macOS"
+
 class ComputerSchema(BaseModel):
     owner: str
     description: Union[str, None] = Field(default=None, max_length=100)
-    OS: str
+    OS: OSType
     RAM: int = Field(ge=8, le=64)
     CPU: str
 
